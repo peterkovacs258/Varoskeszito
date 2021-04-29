@@ -10,7 +10,7 @@ define('DB_NAME','varoskeszito');
 define('APPROOT',dirname(dirname(__FILE__)));
 
 //URLROOT
-define('URLROOT','localhost/varoskeszito/');
+define('URLROOT','http:\\localhost\varoskeszito');
 
 //SITENAME
 define('SITENAME','VarosKeszito');
