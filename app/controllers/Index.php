@@ -8,14 +8,13 @@ class Index extends Controller{
 
     public function index()
     {
-        //this array serves the purpos of sending data to the view
+        //Ez a tömb küld információkat a view nek
         $data=[
             'megyekOptionba'=>""
         ];
-        //We ask the model for the counties of hungary
         $megyek=$this->megyeModel->getAllCounty();
         $megyekOptionba="";
-        //fill the $megyekOptionba variable with the counties in <option></option> tags
+        //Feltöltjük a $megyekOptionba változót, Magyarország megyéivel, <option></option> tag-ekben
         foreach($megyek as $item)
         {
             $megyekOptionba.="<option value='".$item->id."'>".$item->nev."</option>";
@@ -41,7 +40,8 @@ class Index extends Controller{
         if($_SERVER['REQUEST_METHOD']=='POST'&&isset($_POST['megyeid'])&&isset($_POST['varosnev']))
         {
             $mId=$_POST['megyeid'];
-            $vnev=$_POST['varosnev'];
+            $vnev=ucfirst($_POST['varosnev']);
+            //Megnézzük hogy már létezik-e a város az adatbázisban
             if(!$this->varosModel->varosExists($vnev))
             {
                 
@@ -49,12 +49,16 @@ class Index extends Controller{
                 {
                     echo $this->varosokTablazatban($mId);
                 }
-                else{ echo http_response_code(304);}
+                else{ 
+                    //Sikertelen hozzáadás
+                    echo $this->varosokTablazatban($mId);
+                }
                 
             }
             else
             {
-                echo $this->varosokTablazatban($mId);
+                //Ha már létezik hibakóddal térünk vissza
+                http_response_code(403);
             }
            
             
@@ -80,15 +84,36 @@ class Index extends Controller{
             
         }
     }
+    //Ajax kérés alapján módosítunk egy várost
+    public function modositVarosAjax(){
+        if($_SERVER['REQUEST_METHOD']=="POST"&&isset($_POST['id'])&&isset($_POST['modCity'])&&isset($_POST['megyeid']))
+        {
+            $id=$_POST['id'];
+            $val=$_POST['modCity'];
+            $mid=$_POST['megyeid'];
+            if($this->varosModel->modifyCity($id,$val))
+            {
+                //siker
+                echo $this->varosokTablazatban($mid);
+
+            }
+            else
+            {
+                //hiba történt
+                echo $this->varosokTablazatban($mid);
+                
+            }
+        }
+    }
 
     //Egy megyeid alapján visszaadja annak városait egy táblázatban
     private function varosokTablazatban($megyeid)
     {
         $megfeleltVarosok=$this->varosModel->getCitiesByCountyId($megyeid);
-        $data=$table="<div>Megye: ".$this->megyeModel->getMegyenevById($megyeid)."</div>";
+        $data=$table="<div class='currentMegyeDiv'>Megye: ".$this->megyeModel->getMegyenevById($megyeid)."</div>";
         if($megfeleltVarosok!=false)
         {
-            $data.="<table class='table table-hover'>".
+            $data.="<table class='table table-hover table-dark'>".
                          "<thead'>".
                           "<tr>".
                               "<th>Városok</th>".

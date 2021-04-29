@@ -1,10 +1,10 @@
 :root
 {
     font-size: 20px;
-    --backgroundBasic:rgb(243, 239, 231);
-    --fontcolorBasic:rgb(43, 37, 41);
-    --transition-color-red:rgb(217, 77, 77);
-    --transition-speed: 200ms;
+    --backgroundBasic:rgb(31, 31, 31);
+    --secondaryBacgroundColor:rgb(44, 44, 44);
+    --fontcolorBasic:rgb(229, 229, 229);
+    --secondaryColorRed:rgb(217, 77, 77);
 }
 html,body{
     width:100%;
@@ -13,46 +13,124 @@ html,body{
     top:0;
     bottom: 0;
     background-color: var(--backgroundBasic);
-    overflow-x: hidden;
+    color: var(--fontcolorBasic);
 }
+/*Fő tároló div*/
 .container{
     width:100%;
     margin:auto;
     margin-top: 200px;
-    min-width:520px;
+    min-width:500px;
     min-height: 400px;
     display:flex;
-    flex-direction: row;   
+    flex-direction: row;
 }
+/*A bal oldali tároló div*/
 .leftSide
 {
+    width:100%;
+    min-width: 280px;
     padding:0.5rem;
-    flex:50%;
+    flex:40%;
 }
+/*Jobb oldali tároló div*/
+.rightSide{
+    min-width: 350px;
+    flex:60%;
+    padding:0.5rem;
+}
+/*Az megyét kiválasztó select div-je*/
 #megyeDiv
 {
-    border:1px solid black;
+    border:1px solid var(--fontcolorBasic);
     border-radius: 5px;
-    max-width: 350px;
     padding:15px 0 0 15px;
+    background-color: var(--secondaryBacgroundColor);
 }
+/*Az új város felvételéért felelős div*/
 #ujVarosDiv{
-    border:1px solid black;
+    border:1px solid var(--fontcolorBasic);
     border-radius: 5px;
-    max-width: 350px;
     padding:15px;
-}
-.rightSide{
-    flex:50%;
-    padding:0.5rem;
-}
-#ujVarosDiv
-{
+    background-color: var(--secondaryBacgroundColor);
     display:none;
-}
 
+}
+/*Megye kiválasztása utána ebben a div ben látszódik a jelenlegi megye*/
+.currentMegyeDiv{
+    border:1px solid var(--fontcolorBasic);
+    border-radius: 5px;
+    padding:15px;
+    background-color: var(--secondaryBacgroundColor);
+
+}
+/*A városok megjelenéséért felelős táblázat, és elemei*/
 table
 {
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    margin-top: 30px;
+    box-shadow: rgba(196, 211, 222, 0.3) 0px 1px 2px 0px, rgba(200, 214, 224, 0.15) 0px 2px 6px 2px;
+}
+table td
+{
+    border:none !important;
+}
+table th
+{
+    border:none !important;
+    text-align: center;
+    background-color: var(--secondaryColorRed);
+}
+table tr
+{
+border:1px solid var(--fontcolorBasic)  !important;
+border-radius: 10px;}
+
+input[type=text]
+{
+    width:170px;
+    margin:auto auto 10px auto;
+}
+.btn
+{
+    height:50px !important;
+    margin:auto 2px auto 2px;
+}
+.addCity
+{
+    margin:auto auto 10px auto;
+
+}
+
+/*Hibás bevitel esetén a kiszínezi pirosra, és animációban 'megrázza'*/
+/*az adott elemet*/
+.shakeit {
+    animation: shake 0.82s;
+    border:1px solid rgb(251, 131, 131) !important;
+    box-shadow: 0 8px 6px -6px rgb(255, 55, 55)  !important;
+  }
+
+  @keyframes shake {
+    10%, 90% {
+      transform: translate3d(-1px, 0, 0);
+    }
+    
+    20%, 80% {
+      transform: translate3d(2px, 0, 0);
+    }
+  
+    30%, 50%, 70% {
+      transform: translate3d(-4px, 0, 0);
+    }
+  
+    40%, 60% {
+      transform: translate3d(4px, 0, 0);
+    }
+  }
+
+  /* Kis képernyő */
+@media only screen and (max-width: 750px) {
+    .container
+    {
+     flex-direction: column;
+     
+    }
 }

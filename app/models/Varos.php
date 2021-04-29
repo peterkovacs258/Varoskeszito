@@ -8,7 +8,7 @@ class Varos{
 
     }
 
-    //Returns every row from database
+    //Visszaad minden várost az adatbázisból
     public function getAllCity(){
     $sql='SELECT * FROM varos';
     $this->db->query($sql);
@@ -17,7 +17,7 @@ class Varos{
     }
     // Kilistázza egy adott megye városait az adatbázis alapján
     public function getCitiesByCountyId($mid){
-        $sql='SELECT * FROM varos where megyeid=:mid';
+        $sql='SELECT * FROM varos where megyeid=:mid ORDER BY nev';
         $this->db->query($sql);
         $this->db->bind(':mid',$mid);
         $res=$this->db->resultSet();
@@ -48,6 +48,23 @@ class Varos{
         {
             return false;
         } 
+    }
+
+    //Módosít egy várost az adatbázisban
+    public function modifyCity($id,$val)
+    {
+        $sql="UPDATE varos SET nev=:val WHERE id=:id";
+        $this->db->query($sql);
+        $this->db->bind(':val',$val);
+        $this->db->bind(':id',$id);
+        if($this->db->execute())
+        {
+            return true;
+        }
+        else 
+        {
+            return false;
+        }
     }
 
     //Név alapján megnézi hogy létezik-e az adott város

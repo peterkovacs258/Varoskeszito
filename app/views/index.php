@@ -13,8 +13,10 @@ require APPROOT . '/views/includes/head.php';
         </div>
         <div id="ujVarosDiv">
             <span>Új város </span>
-            <input type="text" placeholder="Például Kecskemét" id="varosInput" class="form-control">
-            <input type="button" value="Felvesz" class="btn btn-light btnFelveszVaros">
+            <div class="form-row form-felvesz">
+                <input type="text" placeholder="Pl: Kecskemét" id="varosInput" class="form-control">
+                <input type="button" value="Felvesz" class="btn btn-light addCity">
+            </div>
         </div>
     </div>
     <div class="rightSide">

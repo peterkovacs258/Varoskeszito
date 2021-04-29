@@ -32,12 +32,12 @@ class Database
 
     }
 
-    //Allows us to write queries
+    //query
     public function query($sql)
     {
         $this->statement=$this->dbHandler->prepare($sql);
     }
-    //Bind values
+    //Bind
     public function bind($parameter, $value,$type=null)
     {
         switch(is_null($type)){
@@ -52,18 +52,18 @@ class Database
         }
         $this->statement->bindValue($parameter, $value,$type);
     }
-    //Execute the prepared statement
+    //Execute
     public function execute()
     {
         return $this->statement->execute();
     }
-    //Returns an array
+    //Egy objektum tömböt ad vissza
     public function resultSet()
     {
         $this->execute();
         return $this->statement->fetchAll(PDO::FETCH_OBJ);
     }
-    //Returns a specific row
+    //Egy rekordot ad vissza, objekumként
     public function single()
     {
         $this->execute();
@@ -71,7 +71,7 @@ class Database
 
     }
 
-    //Gets the row count
+    //Visszaadja a talált rekordok számát
     public function rowCount(){
         return $this->statement->rowCount();
     }
